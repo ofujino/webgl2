@@ -2,6 +2,18 @@ html, body {
   margin: 0
 }
 
+canvas {
+  display: block;
+}
+
+.invisible {
+  display:none;
+}
+
+.absolute {
+  position:absolute;
+}
+
 #screen {
   display: block;
   width: 100vw;

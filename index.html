@@ -5,28 +5,16 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
-    <style>
-      canvas {
-        display: block;
-      }
-      .invisible {
-        display:none;
-      }
-      .absolute {
-        position:absolute;
-      }
-      .right-top {
-        padding: 5px 10px;
-        right: 0;
-        top: 0;
-      }
-    </style>
+    <link rel="stylesheet" href="/style.css">
   </head>
   <body>
     <div id="app">
       <canvas class="absolute" id="screen"></canvas>
+      <div class="absolute" id="debug1"></div>
+      <div class="absolute" id="debug2"></div>
+      <div class="absolute" id="debug3"></div>
     </div>
     <script type="module" src="/main.js"></script>
-    <img id="webgl" src="/webgl.png" class="invisible">
+    <img class="invisible" id="webgl" src="/texture/webgl.png">
   </body>
 </html>

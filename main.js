@@ -1,4 +1,3 @@
-import './style.css'
 import { vec3, mat4 } from 'gl-matrix'
 import * as WGL from './wgl'
 
@@ -49,10 +48,21 @@ window.onload = () => {
       .attribute('uv', array, 2, 8, 6)
       .index(index)
       .draw(wgl.gl.TRIANGLE_STRIP, 4)
-    requestAnimationFrame(render)
   }
 
-  render()
+  let requestId
+
+  const loop = (arg) => {
+    requestId = requestAnimationFrame(loop)
+    try {
+      render()
+    } catch (err) {
+      cancelAnimationFrame(requestId)
+      console.error(err)
+    }
+  }
+
+  loop()
 }
 
 const vs = `
