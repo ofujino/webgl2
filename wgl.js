@@ -34,6 +34,11 @@ class Program {
     return this
   }
 
+  unuse () {
+    this.gl.useProgram(null)
+    return this
+  }
+
   link (vs, fs) {
     const gl = this.gl
     const program = gl.createProgram()
@@ -63,7 +68,9 @@ class Program {
 
   draw (mode, count) {
     if (this.elementArrayBuffer) {
+      this.elementArrayBuffer.bind()
       this.gl.drawElements(mode, count, this.elementArrayBuffer.arraySize, 0)
+      this.elementArrayBuffer.unbind()
     } else {
       this.gl.drawArrays(mode, 0, count)
     }
@@ -92,6 +99,12 @@ class Program {
     return this
   }
 
+  uniform4fv (name, value) {
+    const gl = this.gl
+    gl.uniform4fv(gl.getUniformLocation(this.program, name), value)
+    return this
+  }
+
   attribute (name, array, numComponents=3, stride=0, offset=0) {
     const gl = this.gl
     const location = gl.getAttribLocation(this.program, name)
@@ -101,6 +114,14 @@ class Program {
     gl.enableVertexAttribArray(location)
     array.bind()
     array.pointer(location, numComponents, stride, offset)
+    return this
+  }
+
+  attribute3fv (name, value) {
+    const gl = this.gl
+    const location = gl.getAttribLocation(this.program, name)
+    gl.disableVertexAttribArray(location)
+    gl.vertexAttrib3fv(location, value)
     return this
   }
 }
@@ -127,10 +148,15 @@ class BaseBuffer {
     } else {
       gl.bufferSubData(this.type, 0, new this.arrayType(data))
     }
+    this.unbind()
   }
 
   bind () {
     this.gl.bindBuffer(this.type, this.buffer)
+  }
+
+  unbind () {
+    this.gl.bindBuffer(this.type, null)
   }
 
   pointer (location, numComponents, stride, offset) {
@@ -159,11 +185,18 @@ class Texture {
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+    //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
+    //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST)
+    gl.generateMipmap(gl.TEXTURE_2D)
   }
 
   bind () {
     this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture)
+  }
+
+  unbind () {
+    this.gl.bindTexture(this.gl.TEXTURE_2D, null)
   }
 }
 
