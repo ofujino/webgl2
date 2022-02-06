@@ -1,5 +1,6 @@
 html, body {
   margin: 0
+  overflow: hidden;
 }
 
 canvas {
@@ -14,10 +15,32 @@ canvas {
   position:absolute;
 }
 
-#screen {
-  display: block;
+body {
+}
+
+#app {
   width: 100vw;
-  height: 100vh;
-  object-fit: contain;
+  height: 75vw; /* height:width ratio = 768/1024 = .75  */
+  max-height: 100vh;
+  max-width: 133.33vh; /* 1024/768 = 1.333 */
+  margin: auto;
+  position: absolute;
+  top:0;bottom:0; /* vertical center */
+  left:0;right:0; /* horizontal center */
+  background: pink;
+}
+
+#screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+#hud {
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
 }
 

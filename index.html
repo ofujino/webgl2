@@ -9,10 +9,14 @@
   </head>
   <body>
     <div id="app">
-      <canvas class="absolute" id="screen"></canvas>
-      <div class="absolute" id="debug1"></div>
-      <div class="absolute" id="debug2"></div>
-      <div class="absolute" id="debug3"></div>
+        <canvas id="screen"></canvas>
+        <div id="hud" style="left:0;top:0;">
+          <div>left-top</div>
+          <div id="debug1">debug1</div>
+          <div id="debug2">debug2</div>
+          <div id="debug3">debug3</div>
+        </div>
+        <div id="hud" style="right:0;bottom:0;">right-bottom</div>
     </div>
     <script type="module" src="/main.js"></script>
     <img class="invisible" id="webgl" src="/texture/webgl.png">
